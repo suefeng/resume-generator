@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume</title>
+    <link href="resume-styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="resume"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+    <script>
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", "resume.md", false);
+      rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+          if (rawFile.status === 200 || rawFile.status == 0) {
+            var converter = new showdown.Converter();
+            var text = rawFile.responseText;
+            var html = converter.makeHtml(text);
+            var resumeContainer = document.getElementById("resume");
+            resumeContainer.innerHTML = html;
+          }
+        }
+      };
+      rawFile.send(null);
+    </script>
+  </body>
+</html>
